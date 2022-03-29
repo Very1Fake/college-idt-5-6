@@ -32,8 +32,8 @@
 <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
     <h3>Ask a Question</h3>
     <form action="/home" method="post">
-        <p><textarea rows="2" cols="50" name="QUESTION" placeholder="Your question"></textarea></p> 
-        <p><input type="text" size="50" name="EMAIL" placeholder="Your email"></p>
+        <p><textarea rows="2" cols="50" name="QUESTION" placeholder="Your question" minlength="16" required></textarea></p> 
+        <p><input type="email" size="50" name="EMAIL" placeholder="Your email" required></p>
         <input class="btn btn-default" type="submit" value="Send">
     </form>
 </div>

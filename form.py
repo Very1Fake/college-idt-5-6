@@ -2,8 +2,8 @@ import re
 
 from bottle import post, request
 
-# Short regex of IETF RFC 5322
-email_regex = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
+# Short regex of IETF RFC 5321 4.5.3.1
+email_regex = re.compile(r"^((?!\.)[a-z0-9.]{1,64}(?<!\.))@((?!-)[a-z0-9-]{1,63}(?<!-)\.)+[a-z]{2,6}$")
 
 
 redirect_ext = '''<br/><br/><br/>
@@ -29,11 +29,11 @@ def form():
     else:
         if email is None or email == '':
             err = "Empty email field"
-        elif email_regex.match(email) is None:
+        elif email_regex.match(email) is None or len(email) > 254:
             err = "Invalid email address"
 
-    if err is None:
-        return f'Thanks for your question! The answer will be sent to your email "{email}".' \
-            + redirect_ext
-    else:
-        return f'Your question hasn\'t been accepted. Due to an error: {err}'
+    return (
+        f'Thanks for your question! The answer will be sent to your email "{email}".'
+        if err is None else
+        f'Your question hasn\'t been accepted. Due to an error: {err}'
+    ) + redirect_ext
