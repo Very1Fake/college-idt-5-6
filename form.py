@@ -1,6 +1,10 @@
 import re
+import pdb
 
 from bottle import post, request
+
+# Questions storage
+questions = {}
 
 # Short regex of IETF RFC 5321 4.5.3.1
 email_regex = re.compile(r"^((?!\.)[a-z0-9.]{1,64}(?<!\.))@((?!-)[a-z0-9-]{1,63}(?<!-)\.)+[a-z]{2,6}$")
@@ -32,6 +36,8 @@ def form():
         elif email_regex.match(email) is None or len(email) > 254:
             err = "Invalid email address"
 
+    questions[email] = question
+    pdb.set_trace()
     return (
         f'Thanks for your question! The answer will be sent to your email "{email}".'
         if err is None else
