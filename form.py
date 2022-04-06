@@ -37,12 +37,8 @@ You will be redirected to home page in 3 seconds.<br/>
 </script>
 '''
 
-@post('/home', method='post')
-def form():
+def validate(question, email):
     err = None
-    question = request.forms.get('QUESTION')
-    email = request.forms.get('EMAIL')
-
     if question is None or question == '':
         err = "Empty question field"
     elif len(question) < 16:
@@ -52,6 +48,14 @@ def form():
             err = "Empty email field"
         elif email_regex.match(email) is None or len(email) > 254:
             err = "Invalid email address"
+    
+    return err
+
+@post('/home', method='post')
+def form():
+    question = request.forms.get('QUESTION')
+    email = request.forms.get('EMAIL')
+    err = validate(question, email)
 
     # Appending to log (with timestamp)
     if email not in questions:
