@@ -2,6 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File with profiler",
+            "type": "python",
+            "request": "launch",
+            "module": "cProfile",
+            "args": [
+                "-o", "/home/very1fake/ram/tmp.prof", "${workspaceFolder}/app.py"
+            ]
+        },
+        {
             "name": "Python: Bottle",
             "type": "python",
             "request": "launch",

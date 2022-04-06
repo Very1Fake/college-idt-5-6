@@ -9,7 +9,7 @@ from bottle import post, request
 # Log path
 LOG_PATH = "./questions.log.json"
 # Questions log storage
-questions = []
+questions = {}
 
 # Load log if exists
 if Path(LOG_PATH).is_file():
@@ -54,9 +54,11 @@ def form():
             err = "Invalid email address"
 
     # Appending to log (with timestamp)
-    questions.append({
+    if email not in questions:
+        questions[email] = []
+
+    questions[email].append({
         "question": question,
-        "from": email,
         "timestamp": int(time()),
     })
 
